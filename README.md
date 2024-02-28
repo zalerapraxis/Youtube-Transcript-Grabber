@@ -4,6 +4,9 @@ It's pretty much a local clone of https://nobinge.watch/ I wrote super quickly w
 
 Take the clipboard output and paste it into ChatGPT, and it'll give you a summary of the video. 
 
-Uses:
+Libraries used:
 - https://github.com/BobLd/youtube-transcript-api-sharp (for getting subtitles)
 - https://github.com/zzzprojects/html-agility-pack (for getting video title)
+
+
+![screenshot of result prompt](https://raw.githubusercontent.com/zalerapraxis/Youtube-Transcript-Grabber/master/prompt.png)
