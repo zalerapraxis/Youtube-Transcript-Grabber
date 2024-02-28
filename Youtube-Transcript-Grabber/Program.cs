@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using YoutubeTranscriptApi;
 
-public class YouTubeTranscriptFetcher
+public class YouTubeTranscriptGrabber
 {
 
     static void Main()
