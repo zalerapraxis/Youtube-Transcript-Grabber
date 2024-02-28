@@ -51,7 +51,7 @@ public class YouTubeTranscriptGrabber
             }
 
             // Grab subtitles from video
-            var response = api.GetTranscript(videoId);
+            var response = api.GetTranscript(videoId, new[] { "en" });
 
             // combine transcript snippets into one string
             var transcript = new StringBuilder();
