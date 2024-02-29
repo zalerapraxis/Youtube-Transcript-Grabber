@@ -31,6 +31,10 @@ public class YouTubeTranscriptGrabber
         // Print transcript
         Console.WriteLine("The transcript has been copied to your clipboard.");
         CopyTextToClipboard(transcript);
+
+        Console.WriteLine(Environment.NewLine);
+        Main();
+        return;
     }
 
     static string GetTranscriptAsync(string videoUrl)
