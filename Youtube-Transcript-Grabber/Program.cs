@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using YoutubeTranscriptApi;
@@ -68,7 +69,15 @@ public class YouTubeTranscriptGrabber
             transcript.AppendLine(Environment.NewLine);
             transcript.AppendLine("---");
             transcript.AppendLine(Environment.NewLine);
-            transcript.AppendLine($"This is the transcript of a YouTube video titled '{videoTitle}'. Tell me what it's about in a super simple and concise way while using the same language.");
+
+            if (!File.Exists("prompt_append.txt")) 
+            { 
+                throw new FileNotFoundException("The specified file does not exist.");
+            }
+
+            var promptText = File.ReadAllText("prompt_append.txt");
+            transcript.AppendLine($"This is the transcript of a YouTube video titled '{videoTitle}'. ");
+            transcript.Append(promptText);
 
             return transcript.ToString();
         }
@@ -81,12 +90,29 @@ public class YouTubeTranscriptGrabber
 
     static string ParseVideoId(string videoUrl)
     {
+        /* 
         // Extract video ID from the URL
         Uri uri = new Uri(videoUrl);
         string videoId = uri.Query.TrimStart('?').Split('&')
                            .Select(x => x.Split('='))
                            .FirstOrDefault(x => x[0] == "v")?[1];
         return videoId;
+        */
+
+        Uri uri = new Uri(videoUrl);
+
+        // Check if it's a watch URL and return the v query parameter
+        if (uri.Segments[1].Contains("watch"))
+            return uri.Query.TrimStart('?').Split('&')
+                .Select(x => x.Split('='))
+                .FirstOrDefault(x => x[0] == "v")?[1];
+
+        // If not, check if it's a shorts URL and return the last path segment
+        else if (uri.Segments[1].Contains("shorts"))
+            return uri.Segments.Last();
+
+        // Return null if neither type of URL is detected
+        return null;
     }
 
     static string GetYouTubeVideoTitle(string url)
